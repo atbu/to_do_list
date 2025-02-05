@@ -25,9 +25,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var todos = <int, String>{
-    1: "Todo 1",
-    2: "Todo 2",
+  final _todos = <Key, String>{
+    Key("1"): "Todo 1",
+    Key("2"): "Todo 2",
   };
   
   @override
@@ -41,9 +41,21 @@ class _MyHomePageState extends State<MyHomePage> {
         child: CupertinoListSection(
           header: const Text('Your To-Dos'),
           children: <CupertinoListTile>[
-            for(var todo in todos.entries)
-              CupertinoListTile(title: Text(todo.value)),
-            
+            for(var todo in _todos.entries)
+              CupertinoListTile(
+                key: todo.key,
+                leading: CupertinoCheckbox(
+                  value: !_todos.containsKey(todo.key),
+                  onChanged: (bool? value) {
+                    setState(() {
+                      if(value == true) {
+                        _todos.remove(todo.key);
+                      }
+                    });
+                  }
+                ),
+                title: Text(todo.value),
+              ),
           ]
         ),
       ),
