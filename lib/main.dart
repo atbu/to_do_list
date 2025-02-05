@@ -30,12 +30,12 @@ class _MyHomePageState extends State<MyHomePage> {
     2: "Todo 2",
   };
   
-  
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
         middle: Text('To Do List'),
+        trailing: Icon(CupertinoIcons.add),
       ),
       child: SafeArea(
         child: CupertinoListSection(
