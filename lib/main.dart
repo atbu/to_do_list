@@ -25,40 +25,72 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _todos = <Key, String>{
-    Key("1"): "Todo 1",
-    Key("2"): "Todo 2",
-  };
+  final _todos = <String>[
+    "Todo 1",
+    "Todo 2",
+  ];
   
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
+      navigationBar: CupertinoNavigationBar(
         middle: Text('To Do List'),
-        trailing: Icon(CupertinoIcons.add),
+        trailing: CupertinoButton(
+          onPressed: () {
+            Navigator.of(context).restorablePush(_dialogBuilder);
+          },
+          child: Icon(CupertinoIcons.add)
+        ),
       ),
       child: SafeArea(
         child: CupertinoListSection(
           header: const Text('Your To-Dos'),
           children: <CupertinoListTile>[
-            for(var todo in _todos.entries)
+            for(var todo in _todos)
               CupertinoListTile(
-                key: todo.key,
                 leading: CupertinoCheckbox(
-                  value: !_todos.containsKey(todo.key),
+                  value: !_todos.contains(todo),
                   onChanged: (bool? value) {
                     setState(() {
                       if(value == true) {
-                        _todos.remove(todo.key);
+                        _todos.remove(todo);
                       }
                     });
                   }
                 ),
-                title: Text(todo.value),
+                title: Text(todo),
               ),
           ]
         ),
       ),
     );
   }
+
+  @pragma('vm:entry-point')
+  static Route<Object?> _dialogBuilder(
+    BuildContext context, Object? arguments) {
+      return CupertinoDialogRoute<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: const Text('Add New To-Do'),
+            content: const Text('Text box goes here.'),
+            actions: <Widget>[
+              CupertinoDialogAction(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancel'),
+              ),
+              CupertinoDialogAction(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Create'),
+              ),
+            ],
+          );
+        });
+    }
 }
+
