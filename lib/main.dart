@@ -37,13 +37,15 @@ class _MyHomePageState extends State<MyHomePage> {
       navigationBar: const CupertinoNavigationBar(
         middle: Text('To Do List'),
       ),
-      child: CupertinoListSection(
-        header: const Text('Your To-Dos'),
-        children: <CupertinoListTile>[
-          for(var todo in todos.entries)
-            CupertinoListTile(title: Text(todo.value)),
-          
-        ]
+      child: SafeArea(
+        child: CupertinoListSection(
+          header: const Text('Your To-Dos'),
+          children: <CupertinoListTile>[
+            for(var todo in todos.entries)
+              CupertinoListTile(title: Text(todo.value)),
+            
+          ]
+        ),
       ),
     );
   }
