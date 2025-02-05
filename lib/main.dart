@@ -36,6 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
       navigationBar: CupertinoNavigationBar(
         middle: Text('To Do List'),
         trailing: CupertinoButton(
+          padding: EdgeInsets.zero,
+          minSize: 0,
           onPressed: () {
             Navigator.of(context).restorablePush(_dialogBuilder);
           },
