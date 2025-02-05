@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,12 +10,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'To Do List',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        useMaterial3: true,
-      ),
+    return CupertinoApp(
+      theme: CupertinoThemeData(brightness: Brightness.light),
       home: const MyHomePage(),
     );
   }
@@ -29,17 +25,31 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _count = 0;
+  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
+    return CupertinoPageScaffold(
+      navigationBar: const CupertinoNavigationBar(
+        middle: Text('To Do List'),
+      ),
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Hello!'),
+          children: <Widget>[
+            Center(
+              child: Text('You have clicked the button $_count times.'),
+            ),
+            SizedBox(height: 10),
+            Center(
+              child: CupertinoButton.filled(
+                onPressed: () => setState(() => _count++),
+                child: const Icon(CupertinoIcons.add),
+              ),
+            ),
           ],
-        ),
-      ),
+        )
+      )
     );
   }
 }
