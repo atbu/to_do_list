@@ -25,7 +25,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _count = 0;
+  var todos = <int, String>{
+    1: "Todo 1",
+    2: "Todo 2",
+  };
+  
   
   @override
   Widget build(BuildContext context) {
@@ -33,23 +37,14 @@ class _MyHomePageState extends State<MyHomePage> {
       navigationBar: const CupertinoNavigationBar(
         middle: Text('To Do List'),
       ),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Center(
-              child: Text('You have clicked the button $_count times.'),
-            ),
-            SizedBox(height: 10),
-            Center(
-              child: CupertinoButton.filled(
-                onPressed: () => setState(() => _count++),
-                child: const Icon(CupertinoIcons.add),
-              ),
-            ),
-          ],
-        )
-      )
+      child: CupertinoListSection(
+        header: const Text('Your To-Dos'),
+        children: <CupertinoListTile>[
+          for(var todo in todos.entries)
+            CupertinoListTile(title: Text(todo.value)),
+          
+        ]
+      ),
     );
   }
 }
